@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace BankSystem.Domain.ValueObjects
 {
     public record Money
@@ -44,6 +46,6 @@ namespace BankSystem.Domain.ValueObjects
         public static bool operator <(Money a, Money b) => a.Amount < b.Amount && a.Currency == b.Currency;
         public static bool operator >(Money a, Money b) => a.Amount > b.Amount && a.Currency == b.Currency;
 
-      public override string ToString() => $"{Amount} {Currency}";
+      public override string ToString() => $"{Amount.ToString(CultureInfo.InvariantCulture)} {Currency}";
     }
 }
