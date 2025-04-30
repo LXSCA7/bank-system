@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using BankSystem.Domain.Exceptions;
 using BankSystem.Domain.ValueObjects;
 
@@ -13,23 +14,47 @@ namespace BankSystem.Domain.Entities
         private DateTime _birthDate;
         public DateTime BirthDate 
         { 
-            get { return _birthDate; } 
-            set 
+            get => _birthDate; 
+            private set 
             {
-                var minimumDate = DateTime.Now.AddYears(-MinimumAge);
-                if (value.Date < minimumDate)
-                    throw new ArgumentException("Usuário deve ter pelo menos 18 anos.");    
-
+                var today = DateTime.Today;
+                var minimumDate = today.AddYears(-MinimumAge);
+                if (value.Date > minimumDate)
+                    throw new ArgumentException("Usuário deve ter pelo menos 18 anos.");
                 _birthDate = value;
             }
         }
-
-        public Account(string name, string document, DateTime birthDate)
+        private string _password;
+        public required string Password 
         {
+            get => _password;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("Senha não pode ser vazia.");
+                if (value.Length < 8)
+                    throw new WeakPasswordException("Senha deve conter ao menos 8 caracteres.");
+                if (!value.Any(char.IsDigit))
+                    throw new WeakPasswordException("Senha deve conter ao menos um número.");
+                if (!value.Any(char.IsAsciiLetterUpper))
+                    throw new WeakPasswordException("Senha deve conter ao menos uma letra maiúscula");
+                if (!value.Any(char.IsAsciiLetterLower))
+                    throw new WeakPasswordException("Senha deve conter ao menos uma letra minúscula.");
+                
+                // falta usar BCrypt: 
+                _password = value ?? throw new ArgumentException("Senha não pode ser vazia.");
+            }
+        } 
+
+        public Account(string name, string document, DateTime birthDate, string password)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nome do titular não estar em branco.", nameof(name));
             OwnerName = name;
             Balance = Money.BRL(0);
             Document = Document.Create(document);
             BirthDate = birthDate;
+            Password = password;
         }
 
         public void Deposit(Money amount) {
