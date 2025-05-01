@@ -36,7 +36,7 @@ namespace BankSystem.Domain.ValueObjects
             if (!value.Any(char.IsDigit))
                 throw new WeakPasswordException("Senha deve conter ao menos um número.");
             if (!value.Any(char.IsLower))
-                throw new WeakPasswordException("Senha deve conter ao menos uma letra minúscula");
+                throw new WeakPasswordException("Senha deve conter ao menos uma letra minúscula.");
             if (!value.Any(char.IsUpper))
                 throw new WeakPasswordException("Senha deve conter ao menos uma letra maiúscula.");
             if (value.Length > 64)
