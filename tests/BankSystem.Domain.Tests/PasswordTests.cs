@@ -59,6 +59,8 @@ namespace BankSystem.Domain.Tests
         [InlineData("MyStr0ngP4ssw0rd!")]
         [InlineData("@UserStrongPassword123")]
         [InlineData("13tasdGTEAD9_BANK-SYSTEM_12aASd149DAsc")]
+        [InlineData("Abcdef1#")]
+        [InlineData("64CharacteRS1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJK")]
         public void Create_WithValidPassword_ShouldReturnPassword(string userStrongPassword)
         {
             Password password = Password.Create(userStrongPassword);
@@ -67,11 +69,28 @@ namespace BankSystem.Domain.Tests
         }
 
         [Fact]
-        public void Create_FromHashedPassword_ShouldReturnHashedPassword()
+        public void VerifyPassword_WithWrongPassword_ShouldReturnFalse()
+        {
+            Password password = Password.Create("ValidPass123");
+            bool check = password.VerifyPassword("InvalidPassword123");
+            Assert.False(check);
+        }
+
+        [Fact]
+        public void CreateFromHash_WithValidHash_ShouldReturnHashedPassword()
         {
             string hashed = "$2a$12$fo8g0ivuGbfmKBbuAYQs/.4kHGzEGWThSJabHTbsEMd7grZmWQFP.";
             Password password = Password.CreateFromHash(hashed);
             Assert.Equal(hashed, password.Value);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void CreateFromHash_WithNullOrEmptyHash_ShouldReturnHashedPassword(string invalidHash)
+        {
+            var exception = Assert.Throws<ArgumentException>(() => Password.CreateFromHash(invalidHash));
+            Assert.Equal("Hash inválido.", exception.Message);
         }
     }
 }
