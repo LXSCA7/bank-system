@@ -12,6 +12,7 @@ namespace BankSystem.Domain.ValueObjects
         /// Cria e criptografa, usando BCrypt, uma senha a partir de um texto plano.
         /// </summary>
         /// <exception cref="WeakPasswordException">Lançada se a senha não atender aos critérios.</exception>
+        /// <exception cref="ArgumentException">Lançada se o hash for nulo ou em branco.</exception>
         public static Password Create(string plainText)
         {
             Validate(plainText);
@@ -22,7 +23,7 @@ namespace BankSystem.Domain.ValueObjects
         public static Password CreateFromHash(string hashedPassword)
         {
             if (string.IsNullOrEmpty(hashedPassword))
-                throw new ArgumentException("Hash inválido");
+                throw new ArgumentException("Hash inválido.");
             
             return new(hashedPassword);
         }
