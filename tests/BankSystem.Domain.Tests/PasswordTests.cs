@@ -16,35 +16,35 @@ namespace BankSystem.Domain.Tests
         public void Create_WithNullOrEmptyPassword_ShoudThrowException(string userPassword)
         {
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create(userPassword));
-            Assert.Equal("Senha fraca. Senha não pode ser vazia.", exception.Message);
+            Assert.Equal("Senha invalida. Senha não pode ser vazia.", exception.Message);
         }
 
         [Fact]
         public void Create_WithPasswordLenghtLowerThanEight_ShoudThrowException()
         {
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create("1234567"));
-            Assert.Equal("Senha fraca. Senha deve conter ao menos 8 caracteres.", exception.Message);
+            Assert.Equal("Senha invalida. Senha deve conter ao menos 8 caracteres.", exception.Message);
         }
 
         [Fact]
         public void Create_WithPasswordWithoutUpperCaseLetters_ShoudThrowException()
         {
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create("password123"));
-            Assert.Equal("Senha fraca. Senha deve conter ao menos uma letra maiúscula.", exception.Message);
+            Assert.Equal("Senha invalida. Senha deve conter ao menos uma letra maiúscula.", exception.Message);
         }
 
         [Fact]
         public void Create_WithPasswordWithoutLowerCaseLetters_ShoudThrowException()
         {
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create("PASSWORD123"));
-            Assert.Equal("Senha fraca. Senha deve conter ao menos uma letra minúscula.", exception.Message);
+            Assert.Equal("Senha invalida. Senha deve conter ao menos uma letra minúscula.", exception.Message);
         }
 
         [Fact]
         public void Create_WithPasswordWithoutNumbers_ShoudThrowException()
         {
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create("Password"));
-            Assert.Equal("Senha fraca. Senha deve conter ao menos um número.", exception.Message);
+            Assert.Equal("Senha invalida. Senha deve conter ao menos um número.", exception.Message);
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace BankSystem.Domain.Tests
         {
             string password = "J=`13Vf_q'8l0Ci>|4!wO193,,9uD3;7[Gy'gjJ%z;9]T_193daczxvvdcbs1349qweadsreuD3;7[Gy'gjJ%z;9]T^\\KxJ";
             var exception = Assert.Throws<WeakPasswordException>(() => Password.Create(password));
-            Assert.Equal("A senha não pode exceder 64 caracteres.", exception.Message);
+            Assert.Equal("Senha invalida. Senha não pode exceder 64 caracteres.", exception.Message);
         }
 
         [Theory]
