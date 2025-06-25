@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using BankSystem.Domain.Exceptions;
 using BankSystem.Domain.ValueObjects;
 
@@ -24,37 +23,17 @@ namespace BankSystem.Domain.Entities
                 _birthDate = value;
             }
         }
-        private string _password;
-        public required string Password 
-        {
-            get => _password;
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("Senha não pode ser vazia.");
-                if (value.Length < 8)
-                    throw new WeakPasswordException("Senha deve conter ao menos 8 caracteres.");
-                if (!value.Any(char.IsDigit))
-                    throw new WeakPasswordException("Senha deve conter ao menos um número.");
-                if (!value.Any(char.IsAsciiLetterUpper))
-                    throw new WeakPasswordException("Senha deve conter ao menos uma letra maiúscula");
-                if (!value.Any(char.IsAsciiLetterLower))
-                    throw new WeakPasswordException("Senha deve conter ao menos uma letra minúscula.");
-                
-                // falta usar BCrypt: 
-                _password = value ?? throw new ArgumentException("Senha não pode ser vazia.");
-            }
-        } 
+        public Password Password { get; private set; }
 
-        public Account(string name, string document, DateTime birthDate, string password)
+        public Account(string name, string document, DateTime birthDate, string plainTextPassword)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome do titular não estar em branco.", nameof(name));
+                throw new ArgumentException("Nome do titular não pode estar em branco.", nameof(name));
             OwnerName = name;
             Balance = Money.BRL(0);
             Document = Document.Create(document);
             BirthDate = birthDate;
-            Password = password;
+            Password = Password.Create(plainTextPassword);
         }
 
         public void Deposit(Money amount) {
