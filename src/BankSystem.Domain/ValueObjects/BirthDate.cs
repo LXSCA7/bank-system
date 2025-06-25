@@ -20,4 +20,28 @@ public record BirthDate
         if (value > minimumDate)
             throw new ArgumentException("Usuário deve ter pelo menos 18 anos.");
     }   
+    
+    public virtual bool Equals(BirthDate? other)
+        => other is not null && other.Value == Value;
+
+    public override int GetHashCode()
+    {
+        return Value.GetHashCode();
+    }
+
+    public virtual bool Equals(DateTime? other)
+        => other == Value;
+
+    public static bool operator ==(DateTime? a, BirthDate b)
+        => a == b.Value;
+    
+    public static bool operator !=(DateTime? a, BirthDate b)
+        => !(a == b);
+    
+    public static bool operator ==(BirthDate a, DateTime b)
+        => a.Value == b;
+    
+    public static bool operator !=(BirthDate a, DateTime b)
+        => !(a.Value == b);
+
 }
