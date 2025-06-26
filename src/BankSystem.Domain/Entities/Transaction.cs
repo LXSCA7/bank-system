@@ -37,10 +37,10 @@ public class Transaction
         Description = description;
     }
 
-    public static Transaction CreateDeposit(Money amount, Guid accountId, string? description = null)
+    public static Transaction CreateDeposit(Guid accountId, Money amount, string? description = null)
         => new Transaction(accountId, null, amount, TransactionType.Deposit, description);
          
-    public static Transaction CreateWithdraw(Money amount, Guid accountId, string? description = null)
+    public static Transaction CreateWithdraw(Guid accountId, Money amount, string? description = null)
         => new Transaction(accountId, null, amount, TransactionType.Withdraw, description);
         
    public static Transaction CreatePayment(Guid accountId, Money value, string? description = null)
