@@ -17,6 +17,9 @@ public class Transaction
         if (!relatedAccountId.HasValue && transactionType == TransactionType.Transfer)
             throw new InvalidOperationException("Uma transferencia deve conter o ID da conta relacionada.");
         
+        if (relatedAccountId == accountId)
+            throw new InvalidOperationException("Uma transacao deve conter o ID da conta relacionada.");
+        
         if (amount.Amount <= 0)
             throw new InvalidOperationException("O valor deve ser maior que zero.");
         
