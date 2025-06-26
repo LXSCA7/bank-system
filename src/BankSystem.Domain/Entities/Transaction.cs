@@ -15,7 +15,7 @@ public class Transaction
     private Transaction(Guid accountId, Guid? relatedAccountId, Money amount, TransactionType transactionType, string? description)
     {
         if (!relatedAccountId.HasValue && transactionType == TransactionType.Transfer)
-            throw new InvalidOperationException("Uma transacao deve conter o ID da conta relacionada.");
+            throw new InvalidOperationException("Uma transferencia deve conter o ID da conta relacionada.");
         
         if (amount.Amount <= 0)
             throw new InvalidOperationException("O valor deve ser maior que zero.");
@@ -40,6 +40,7 @@ public class Transaction
    
    public static Transaction CreateTransfer(Guid accountId, Guid relatedAccountId, Money value, string? description) 
        => new Transaction(accountId,  relatedAccountId, value, TransactionType.Transfer, description);
+
 }
 
 public enum TransactionType
