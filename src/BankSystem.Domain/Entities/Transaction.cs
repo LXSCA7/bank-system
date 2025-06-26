@@ -17,8 +17,13 @@ public class Transaction
         if (!relatedAccountId.HasValue && transactionType == TransactionType.Transfer)
             throw new InvalidOperationException("Uma transferencia deve conter o ID da conta relacionada.");
         
+        if (relatedAccountId.HasValue && transactionType != TransactionType.Transfer)
+            throw new InvalidOperationException("Uma transacao diferente de transferencia nao pode ter outra conta" +
+                                                " relacionada.");
+        
         if (relatedAccountId == accountId)
-            throw new InvalidOperationException("Uma transacao deve conter o ID da conta relacionada.");
+            throw new InvalidOperationException("Voce nao pode fazer uma transferencia para si mesmo.");
+
         
         if (amount.Amount <= 0)
             throw new InvalidOperationException("O valor deve ser maior que zero.");
@@ -32,16 +37,16 @@ public class Transaction
         Description = description;
     }
 
-    public static Transaction CreateDeposit(Money amount, Guid accountId, string? description)
+    public static Transaction CreateDeposit(Money amount, Guid accountId, string? description = null)
         => new Transaction(accountId, null, amount, TransactionType.Deposit, description);
          
-    public static Transaction CreateWithdraw(Money amount, Guid accountId, string? description)
+    public static Transaction CreateWithdraw(Money amount, Guid accountId, string? description = null)
         => new Transaction(accountId, null, amount, TransactionType.Withdraw, description);
         
-   public static Transaction CreatePayment(Guid accountId, Money value, string? description)
+   public static Transaction CreatePayment(Guid accountId, Money value, string? description = null)
        => new Transaction(accountId, null, value, TransactionType.Payment, description);
    
-   public static Transaction CreateTransfer(Guid accountId, Guid relatedAccountId, Money value, string? description) 
+   public static Transaction CreateTransfer(Guid accountId, Guid relatedAccountId, Money value, string? description = null) 
        => new Transaction(accountId,  relatedAccountId, value, TransactionType.Transfer, description);
 
 }
