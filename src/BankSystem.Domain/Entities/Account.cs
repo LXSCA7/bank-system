@@ -5,24 +5,11 @@ namespace BankSystem.Domain.Entities
 {
     public class Account
     {
-        private const int MinimumAge = 18;
         public Guid Id { get; private set; }
         public string OwnerName { get; private set; }
         public Money Balance { get; private set; } // value object
         public Document Document { get; private set; } // value object
-        private DateTime _birthDate;
-        public DateTime BirthDate 
-        { 
-            get => _birthDate; 
-            private set 
-            {
-                var today = DateTime.Today;
-                var minimumDate = today.AddYears(-MinimumAge);
-                if (value.Date > minimumDate)
-                    throw new ArgumentException("Usuário deve ter pelo menos 18 anos.");
-                _birthDate = value;
-            }
-        }
+        public BirthDate BirthDate { get; private set; }
         public Password Password { get; private set; }
 
         public Account(string name, string document, DateTime birthDate, string plainTextPassword)
@@ -32,7 +19,7 @@ namespace BankSystem.Domain.Entities
             OwnerName = name;
             Balance = Money.BRL(0);
             Document = Document.Create(document);
-            BirthDate = birthDate;
+            BirthDate = BirthDate.Create(birthDate);
             Password = Password.Create(plainTextPassword);
         }
 
