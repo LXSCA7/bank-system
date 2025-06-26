@@ -1,0 +1,15 @@
+services:
+  bank-db:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: bank_db
+      POSTGRES_USER: bank_user
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
