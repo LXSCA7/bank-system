@@ -5,7 +5,12 @@ public record BirthDate
     private const int MINIMUM_AGE = 18;
     public DateTime Value { get; }
     private BirthDate(DateTime value) => Value = value;
-
+    
+    /// <summary>
+    /// Creates a BirthDate instance.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <exception cref="ArgumentException">Lançada se a data for invalida.</exception>
     public static BirthDate Create(DateTime value)
     {
         value = value.Date;
