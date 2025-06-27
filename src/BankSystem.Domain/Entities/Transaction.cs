@@ -2,9 +2,8 @@ using BankSystem.Domain.ValueObjects;
 
 namespace BankSystem.Domain.Entities;
 
-public class Transaction
+public class Transaction : Entity
 {
-    public Guid Id { get; }
     public Guid AccountId { get; }
     public Guid? RelatedAccountId { get;  }
     public Money Amount { get; }

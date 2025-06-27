@@ -3,9 +3,8 @@ using BankSystem.Domain.ValueObjects;
 
 namespace BankSystem.Domain.Entities
 {
-    public class Account
+    public class Account : Entity
     {
-        public Guid Id { get; private set; }
         public string OwnerName { get; private set; }
         public Money Balance { get; private set; } // value object
         public Document Document { get; private set; } // value object
