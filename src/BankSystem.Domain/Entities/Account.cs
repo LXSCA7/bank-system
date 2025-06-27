@@ -5,21 +5,10 @@ namespace BankSystem.Domain.Entities
 {
     public class Account : Entity
     {
-        public string OwnerName { get; private set; }
         public Money Balance { get; private set; } // value object
-        public Document Document { get; private set; } // value object
-        public BirthDate BirthDate { get; private set; }
-        public Password Password { get; private set; }
-
-        public Account(string name, string document, DateTime birthDate, string plainTextPassword)
+        public Account()
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome do titular não pode estar em branco.", nameof(name));
-            OwnerName = name;
             Balance = Money.BRL(0);
-            Document = Document.Create(document);
-            BirthDate = BirthDate.Create(birthDate);
-            Password = Password.Create(plainTextPassword);
         }
 
         public void Deposit(Money amount) {
