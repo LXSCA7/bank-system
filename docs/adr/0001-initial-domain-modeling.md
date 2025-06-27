@@ -2,9 +2,9 @@
 
 ---
 
-**Titulo: Modelagem inicial de Entitades e Value Objects, usando classes e records em C#.**
+**Titulo: _Modelagem inicial de Entitades e Value Objects, usando classes e records em C#._**
 
-**Status: Aceita**
+**Status: _Obsoleta, consulte [ADR-0002](./0002-refactoring-domain-models.md)_**
 
 ## Contexto:
 
