@@ -21,11 +21,20 @@ public class User : Entity
         => new(email,  plainTextPassword, userType, customerId);
 
     public void UpdateUserType(Guid userType)
-        => UserType = userType;
-    
-    public void UpdateEmail(string email) 
-        => Email = Email.Create(email);
-    
+    { 
+        UserType = userType;
+        Update();
+    }
+
+    public void UpdateEmail(string email)
+    {
+        Email = Email.Create(email);
+        Update();
+    }
+
     public void UpdatePassword(string password)
-        => Password = Password.Create(password);
+    {
+        Password = Password.Create(password);
+        Update();
+    }
 }
