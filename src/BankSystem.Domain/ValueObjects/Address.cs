@@ -35,10 +35,10 @@ public record Address
         Complement = complement;
     }
     
-    public static Address Create(string country, string city, string state, string streetName, int houseNumber, string? complement)
+    internal static Address Create(string country, string city, string state, string streetName, int houseNumber, string? complement)
         => new (country, city, state, streetName, houseNumber, complement);
     
-    public static Address CreateBrazil(string city, string state, string streetName, int houseNumber, string? complement)
+    internal static Address CreateBrazil(string city, string state, string streetName, int houseNumber, string? complement)
         => new ("Brazil", city, state, streetName, houseNumber, complement);
     
     public override string ToString()
