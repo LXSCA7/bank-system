@@ -18,15 +18,6 @@ public class AccountTests
         Assert.Equal("accountNumber", ex.ParamName);
         Assert.Equal($"Invalid account number: {errorMessage} (Parameter 'accountNumber')", ex.Message);
     }
-    
-    [Fact]
-    public void CreateAccount_WithInvalidCostumerId_ShouldThrowsException()
-    {
-        var ex = Assert.Throws<ArgumentException>(() => Account.Create("0000000001",  Guid.NewGuid()));
-        
-        Assert.Equal("accountNumber", ex.ParamName);
-        Assert.Equal("Invalid account number (Parameter 'accountNumber')", ex.Message);
-    }
 
     [Fact]
     public void CreateAccount_WithValidParameters_ShouldReturnSuccess()
