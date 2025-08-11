@@ -31,7 +31,7 @@ public class Transaction : Entity
         AccountId = accountId;
         RelatedAccountId = relatedAccountId;
         Amount = amount;
-        TransactionDate = DateTime.Now;
+        TransactionDate = DateTime.UtcNow;
         TransactionType = transactionType;
         Description = description;
     }

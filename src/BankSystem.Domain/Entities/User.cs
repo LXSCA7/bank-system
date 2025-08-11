@@ -6,14 +6,14 @@ public class User : Entity
 {
     public Email Email { get; private set; }
     public Password Password { get; private set; }
-    public Guid UserType { get; private set; }
+    public Guid UserTypeId { get; private set; }
     public Guid CustomerId { get; private set; }
 
     private User(string email, string plainTextPassword, Guid userType, Guid customerId)
     {
         Email = Email.Create(email);
         Password = Password.Create(plainTextPassword);
-        UserType = userType;
+        UserTypeId = userType;
         CustomerId = customerId;
     }
     
@@ -22,7 +22,7 @@ public class User : Entity
 
     public void UpdateUserType(Guid userType)
     { 
-        UserType = userType;
+        UserTypeId = userType;
         Update();
     }
 
