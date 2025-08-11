@@ -8,6 +8,7 @@ public abstract class Entity
     public bool Active { get; private set; } = true;
     public DateTime? DeletedAt { get; private set; }
     public Guid? DeletedBy { get; private set; }
+    public uint Version { get; private set; }
 
     public void Deactivate(Guid deletedBy)
     {
